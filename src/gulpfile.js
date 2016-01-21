@@ -6,7 +6,15 @@ var gulp    = require('gulp'),
     rename  = require('gulp-rename'),
     rev     = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
-	less    = require("gulp-less");
+	less    = require("gulp-less"),
+    _       = require("underscore"),
+    minimist= require('minimist');
+
+var knownOptions = {
+    string: 'env',
+    default: { env: process.env.NODE_ENV || 'production' }
+};
+var options = minimist(process.argv.slice(2), knownOptions);
 
 gulp.task('clean', function() {
     return gulp.src('../res', {read: false, force: true}).pipe(clean());
@@ -51,7 +59,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('app', function() {
-    return gulp.src(['./**'])
+    return gulp.src(['./app/**', './lib/**', 'main.js'])
         .pipe(gulp.dest('../res'));
 });
 
@@ -71,3 +79,19 @@ gulp.task('cp', function() {
     gulp.src(['../res/**']).pipe(gulp.dest('./dist/res'));
 });
 
+gulp.task('html', function() {
+    // 获取fs
+    var fs  = require("fs");
+    // 同步读取
+    var tpl = fs.readFileSync('index.tpl');
+    // 参数获取
+    var data= [];
+    data['env']  = options.env;
+    data['code'] = new Date().getTime();
+    
+    var template = _.template(tpl.toString());
+
+    fs.writeFile("../index.html", template(data), function(e){//会先清空原先的内容
+        if(e) throw e;
+    })
+});
