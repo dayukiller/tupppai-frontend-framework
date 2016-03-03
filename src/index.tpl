@@ -12,28 +12,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" /> 
  
-    <!-- css -->
+    <!-- require conifg-->
+    <%
+        var code = new Date().getTime(); 
+        var min = (env == 'dev')? '': '.min';
+        var src = (env == 'dev')? 'src': 'res';
+    %>
     <script>
         var require = {
-            urlArgs : "v=<%= code %>"
+            urlArgs : "v=<%= code %>",
+            timeout : 100
         };
     </script>    
 
-    <!-- 生成css集合 -->
-    <% if(env == 'dev') { %>
-        <link rel="stylesheet" type="text/css" href="/css/main.css?<%= code %>"  >
-        <!-- 合并后的js文件在script-build/src -->
-        <script data-main="res/main" src="/res/lib/require/require.js"></script>
-    <% } else { %>
-        <link rel="stylesheet" type="text/css" href="/css/common.css"  >
-        <!-- 未合并后的js文件在src/src -->
-        <script data-main="src/main" src="/src/lib/require/require.js"></script>
-    <% } %>
+    <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
+    <!-- 合并后的js文件在script-build/src -->
+    <script data-main="<%= src %>/main" src="/<%= src %>/lib/require/require.js"></script>
     <!--[if IE]>
-         <script src="/res/lib/respond/respond.js" ></script>
-         <script src="/res/lib/es5/es5-sham.js" ></script>
-         <script src="/res/lib/mediaqueries/css3-mediaqueries.js" ></script>
-         <script src="/res/lib/PIE/PIE.js" ></script>
+         <script src="/<%= src %>/lib/respond/respond.js" ></script>
+         <script src="/<%= src %>/lib/es5/es5-sham.js" ></script>
+         <script src="/<%= src %>/lib/mediaqueries/css3-mediaqueries.js" ></script>
+         <script src="/<%= src %>/lib/PIE/PIE.js" ></script>
     <![endif]--> 
     <title>图派</title>
 </head> 

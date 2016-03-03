@@ -1,6 +1,6 @@
 build:
-	rm -rf src/dist res css; cd src; gulp app; gulp less; gulp cp; gulp html --env dev;
+	cd src; gulp build; 
 release: 
-	rm -rf src/dist res css; cd src; gulp app; gulp less; gulp rjs; gulp cp; gulp html;
+	cd src; gulp release;
 watch:
-	rm -rf src/dist res css; cd src; gulp app; gulp less; gulp html --env dev; gulp watch;
+	cd src; gulp watch;

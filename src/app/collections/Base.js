@@ -13,13 +13,10 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         post: function(callback) {
             var self = this;
             $.post(self.url, self.data, function(data) {
-                var data = self.parse(data);
-
                 self.trigger('change');
                 callback && callback(data);
             });
         },
-        parse: parse,
         plock: false,
         lock: function() { 
             if(this.plock != this._listenerId) {
@@ -31,7 +28,6 @@ define(['backbone', 'underscore'], function(Backbone, _) {
             }
         },
         unlock: function(data) {
-            //if(data.length > 0 && this.plock == data._listenerId)
             this.plock = false;
         },
         fetch: function(options) {

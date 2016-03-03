@@ -12,8 +12,7 @@ define(['backbone'], function(Backbone) {
         },
         construct: function(data) {
             
-        },
-        parse: parse 
+        }
     });
 
 }); 
