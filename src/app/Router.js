@@ -9,13 +9,7 @@ define('app/Router', [ 'marionette' ], function (marionette) {
         var routes = {};
         var controllers = {};
 
-        routes['']          = 'index';
-        routes['*action']   = 'action';
-        //extra action defined
-        controllers['action'] = function (action) {
-            //do nothing
-            console.log('no match action: ' + action);
-        }
+        routes['']          = 'index'; 
 
         for(var i = 1; i < paths.length; i ++) {
             var path = paths[i];
@@ -44,6 +38,13 @@ define('app/Router', [ 'marionette' ], function (marionette) {
                     }
                 });
             }
+        }
+
+        routes['*action']   = 'action';
+        //extra action defined
+        controllers['action'] = function (action) {
+            //do nothing
+            console.log('no match action: ' + action);
         }
 
         return marionette.AppRouter.extend({
