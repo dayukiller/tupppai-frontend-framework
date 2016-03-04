@@ -17,7 +17,7 @@
             ]
         }, 
         {
-            name: 'app/Router'
+            name: 'app/router'
         }
     ],
     paths: {

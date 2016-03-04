@@ -14,7 +14,7 @@
  
     <!-- require conifg-->
     <%
-        var baseUri = '/html';
+        var baseUri = 'html';
         var code = new Date().getTime(); 
         var min = (env == 'dev')? '': '.min';
         var src = (env == 'dev')? 'src': 'res';
@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
     <!-- 合并后的js文件在script-build/src -->
-    <script data-main="./<%= src %>/main" src="./<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
+    <script data-main="<%= src %>/main" src="/<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
     <!--[if IE]>
          <script src="./<%= baseUri %>/<%= src %>/lib/respond/respond.js" ></script>
          <script src="./<%= baseUri %>/<%= src %>/lib/es5/es5-sham.js" ></script>
