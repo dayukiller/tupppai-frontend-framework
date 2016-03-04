@@ -14,25 +14,28 @@
  
     <!-- require conifg-->
     <%
+        var baseUri = '/html';
         var code = new Date().getTime(); 
         var min = (env == 'dev')? '': '.min';
         var src = (env == 'dev')? 'src': 'res';
     %>
     <script>
+        var baseUri = '/<%= baseUri %>';
+
         var require = {
             urlArgs : "v=<%= code %>",
-            timeout : 100
+            timeout : 100,
         };
     </script>    
 
     <link rel="stylesheet" type="text/css" href="/css/main<%= min %>.css?<%= code %>"  >
     <!-- 合并后的js文件在script-build/src -->
-    <script data-main="<%= src %>/main" src="/<%= src %>/lib/require/require.js"></script>
+    <script data-main="./<%= src %>/main" src="./<%= baseUri %>/<%= src %>/lib/require/require.js"></script>
     <!--[if IE]>
-         <script src="/<%= src %>/lib/respond/respond.js" ></script>
-         <script src="/<%= src %>/lib/es5/es5-sham.js" ></script>
-         <script src="/<%= src %>/lib/mediaqueries/css3-mediaqueries.js" ></script>
-         <script src="/<%= src %>/lib/PIE/PIE.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/respond/respond.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/es5/es5-sham.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/mediaqueries/css3-mediaqueries.js" ></script>
+         <script src="./<%= baseUri %>/<%= src %>/lib/PIE/PIE.js" ></script>
     <![endif]--> 
     <title>图派</title>
 </head> 

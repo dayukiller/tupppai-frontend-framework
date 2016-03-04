@@ -2,7 +2,7 @@ require.config({
     paths: {
         backbone: 'lib/backbone/backbone',
         underscore: 'lib/underscore/underscore',
-        zepto: 'lib/zepto/zepto.min',
+        zepto: 'lib/zepto/zepto',
         deferred: 'lib/simply-deferred/deferred',
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
@@ -43,14 +43,12 @@ require.config({
     }
 });
 
-require(['app/App', 'backbone', 'app/Router'],
-    function (app, Backbone, Router) { 
+require(['app/app', 'backbone', 'app/router'],
+    function (App, Backbone) { 
         "use strict"; 
 
-        window.app = app;
-
-        app.start();
-        new Router();
+        window.app = App;
+        App.start();
 
         Backbone.history.start(); 
         Backbone.history.on("all", function (route, router) {

@@ -1,10 +1,7 @@
-define(['marionette','app/models/Base'], function (Marionette,ModelBase) {
+define(['marionette'], function (Marionette) {
     "use strict";
     
     return Marionette.ItemView.extend({
-        initialize: function(){ 
-            this.construct();
-        },
         onRender: function(){ 
         },
         render: function() {
@@ -39,19 +36,21 @@ define(['marionette','app/models/Base'], function (Marionette,ModelBase) {
                 //总高度
                 var pageHeight   = $(document.body).height();
                 //滚动条top
-                var scrollTop    = $(window).scrollTop();
+                var scrollTop    = document.body.scrollTop;
             
-                if ((pageHeight-windowHeight-scrollTop)/windowHeight < 0.15) {
-                    if(collection) {
-                        self = collection;
-                    }
-
-                    self.collection.loading(function(data){ });
+                if ((pageHeight-windowHeight-scrollTop)/windowHeight > 0.15) {
+                    return false;
                 }
+
+                if(collection) {
+                    self.collection = collection;
+                }
+                
+                self.collection.loading(function(data){
+                    if(data.length == 0)
+                        $(window).unbind('scroll');
+                });
             });
-        }
-        construct: function() {
-            
         }
     });
 });

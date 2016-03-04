@@ -10,13 +10,6 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                 size: 15
             }
         },
-        post: function(callback) {
-            var self = this;
-            $.post(self.url, self.data, function(data) {
-                self.trigger('change');
-                callback && callback(data);
-            });
-        },
         plock: false,
         lock: function() { 
             if(this.plock != this._listenerId) {
@@ -29,6 +22,13 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         },
         unlock: function(data) {
             this.plock = false;
+        },
+        post: function(callback) {
+            var self = this;
+            $.post(self.url, self.data, function(data) {
+                self.trigger('change');
+                callback && callback(data);
+            });
         },
         fetch: function(options) {
 			var self = this;
@@ -67,7 +67,11 @@ define(['backbone', 'underscore'], function(Backbone, _) {
 		paging: function(page, callback) {
 			this.fetch({
 				page: page,
-				callback: callback
+				callback: function() {
+                    self.unlock(data);
+                    self.trigger('change');
+                    callback && callback(data);
+                }
 			});
 		}
      });

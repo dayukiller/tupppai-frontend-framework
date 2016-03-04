@@ -14,7 +14,7 @@
         var loadingDiv = document.createElement('div');
         loadingDiv.id = '__loading';
         loadingDiv.className = 'body_loading';
-        loadingDiv.innerHTML = "<img src='img/loading.gif' alt='加载中...' />";
+        loadingDiv.innerHTML = "<img src='/img/loading.gif' alt='加载中...' />";
         loadingDiv.style.position = "absolute";
         loadingDiv.style.left = "49%";
         loadingDiv.style.top = "64%";
@@ -84,9 +84,12 @@ function append(el, item, options) {
     for(var i in options) {
         opt[i] = options[i];
     }
+    el.append(item);
+    /*
     var item = $(item).clone().hide();
     $(el).append(item);
     item.show(opt.time);
+    */
 };
 
 function parse(resp, xhr) { 
