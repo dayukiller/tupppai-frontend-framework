@@ -1,5 +1,4 @@
-define('app/app', [ 'marionette', ],
-    function (marionette) {
+define('app/app', [ 'marionette'], function (marionette) {
         "use strict";
         var app  = new marionette.Application();
 

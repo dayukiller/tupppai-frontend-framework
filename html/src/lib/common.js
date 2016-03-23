@@ -85,117 +85,34 @@ function append(el, item, options) {
         opt[i] = options[i];
     }
     el.append(item);
-    /*
-    var item = $(item).clone().hide();
-    $(el).append(item);
-    item.show(opt.time);
-    */
 };
 
 function parse(resp, xhr) { 
-    if(resp.ret == 2) {
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx386ec5d1292a1e8f&redirect_uri=http://film.tupppai.com/wechat&response_type=code&scope=snsapi_userinfo#wechat_redirect';
-    }
-    if(resp.ret == 0 && resp.code == 1  ) {
 
+    if(resp.ret == 2 && this.url == 'user/status') { 
+        //todo 允许未登录 
+        return true;
     }
-
-    if(resp.ret == 0 && resp.code == 1 && this.url != 'user/status') { 
-       
-        return false;
-    } 
-    else if(resp.ret == 0 && this.url != 'user/status') {
-        return error('操作失败', resp.info);
+    else if(resp.ret == 2) {
+        alert('not login');
+        //var appid = resp.data.wx_appid;
+        //var host  = location.host;
+        //var redirect = encodeURIComponent('?hash='+location.hash.substr(1));
+	    //location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri=http://'+host+'/wechat&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect';
+    }
+    else if(resp.ret == 0 && resp.code == 1  ) {
+        return error(resp.info);
     }
     //console.log('parsing base modelxxx');
     return resp.data;
 };
 
-function wx_sign() {
-    $.post('sign', {url: 'http://' + location.host + '/'}, function(data) {
-        wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: data.appId, // 必填，公众号的唯一标识
-            timestamp: data.timestamp, // 必填，生成签名的时间戳
-            nonceStr: data.nonceStr, // 必填，生成签名的随机串
-            signature: data.signature,// 必填，签名，见附录1
-            jsApiList: [
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage',
-                'onMenuShareQQ',
-                'onMenuShareWeibo',
-                'onMenuShareQZone'
-            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });
-    });
-};
-
 function error(title, desc, callback) {
-    
-    $('#alert_show').addClass('show-block');
-
-    $(".ale-head").text(title);
-    $("#error-popup .error-content").text(desc);
-
-    $("#show-error-popup").click();
+    alert(title);    
+    callback && callback();
 };
 
 function toast(desc, callback) {
-
-    $("#toast-popup .error-content").text(desc);
-
-    $("#show-toast-popup").click();
-
-};
-
-function _parseFloat(str) {
-    if(str == '') {
-        return 0;
-    }
-    return Math.round( parseFloat(str), 2 );
-};
-
-function share(options, success, cancel) {
-    var opt = {};
-    opt.title   = '出品联盟';
-    opt.desc    = '出品联盟';
-    opt.img     = 'http://' + location.hostname + '/favicon.ico';
-    opt.link    = location.href;
-
-    for(var i in options) {
-        if(options[i]) opt[i] = options[i];
-    }
-    wx.ready(function() {
-        //分享朋友圈
-        wx.onMenuShareAppMessage({
-            title: opt.title, // 分享标题
-            desc: opt.desc, // 分享描述
-            link: opt.link, // 分享链接
-            imgUrl: opt.img, // 分享图标
-            type: 'link', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () { 
-                // 用户确认分享后执行的回调函数
-                success && success();
-            },
-            cancel: function () { 
-                // 用户取消分享后执行的回调函数
-                cancel && cancel();
-            }
-        });
-//分享好友
-        wx.onMenuShareTimeline({
-            title: opt.title, // 分享标题
-            link: opt.link, // 分享链接
-            imgUrl: opt.img, // 分享图标
-            success: function () { 
-                // 用户确认分享后执行的回调函数
-                success && success();
-            },
-            cancel: function () { 
-                // 用户取消分享后执行的回调函数
-                cancel && cancel();
-            }
-        });
-    });
+    alert(desc);
+    callback && callback();
 };

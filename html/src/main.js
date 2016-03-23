@@ -7,6 +7,7 @@ require.config({
         marionette: 'lib/backbone/backbone.marionette',
         tpl: 'lib/require/tpl',
         common: 'lib/common',
+        wechat: 'lib/wechat/wechat',
         lazyload: 'lib/lazyload/lazyload',
         fastclick: 'lib/fastclick/fastclick'
     },
@@ -31,6 +32,10 @@ require.config({
         common: {
             deps: ['zepto'],
             exports: 'common'
+        },
+        wechat : {
+            deps: ['zepto'],
+            exports: 'wechat'
         },
         lazyload: {
             depts: ['zepto'],
